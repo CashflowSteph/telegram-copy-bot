@@ -1,10 +1,11 @@
 from telegram.ext import ApplicationBuilder, MessageHandler, filters
 import os
 
-app = ApplicationBuilder().token(os.getenv("BOT_TOKEN")).build()
+TOKEN = os.environ["BOT_TOKEN"]
+SOURCE = int(os.environ["SOURCE"])
+DEST = int(os.environ["DEST"])
 
-SOURCE = int(os.getenv("SOURCE"))
-DEST = int(os.getenv("DEST"))
+app = ApplicationBuilder().token(TOKEN).build()
 
 async def copy(update, context):
     if update.channel_post:
@@ -15,4 +16,5 @@ async def copy(update, context):
         )
 
 app.add_handler(MessageHandler(filters.ALL, copy))
+
 app.run_polling()
